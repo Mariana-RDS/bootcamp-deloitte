@@ -8,3 +8,8 @@ Bootcamp de Treinamento em Java - Deloitte
     * Seleção de Fluxo switch-case: escolhido ao invés do if-else por ser visualmente mais limpo e mais eficiente para criação de um menu, direcionando o fluxo.
     * Armazenamento ArrayList: Escolhido por ser dinâmico e oferecer métodos prontos de .add(), .remove(), .set()
     * Validação de segurança com if-else: para validar os índices, impedindo o acesso fora da posição que não existe.
+    
+
+  * Melhorias
+    * Criação de uma classe para usuário, assim centralizando todos os dados de uma pessoa em um único objeto
+    * O usuário passa a escolher qual atributo editar
