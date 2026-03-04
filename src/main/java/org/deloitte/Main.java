@@ -1,5 +1,7 @@
 package org.deloitte;
 
+import org.deloitte.User.User;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,7 +9,7 @@ public class Main {
     static void main() {
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> usuarios = new ArrayList<>();
+        ArrayList<User> usuarios = new ArrayList<>();
         int opcao = -1;
 
         while (opcao != 0) {
@@ -25,7 +27,11 @@ public class Main {
                 case 1:
                     System.out.println("Insira o nome do usuário: ");
                     String nome = scanner.next();
-                    usuarios.add(nome);
+
+                    System.out.println("Insira o email do usuário: ");
+                    String email = scanner.next();
+
+                    usuarios.add(new User(nome, email));
                     break;
 
                 case 2:
@@ -43,11 +49,31 @@ public class Main {
                     System.out.println("Insira o Id do usuário para editar: ");
                     int idEditar = scanner.nextInt();
                     scanner.nextLine();
-                    if (idEditar >= 0 || idEditar < usuarios.size()) {
-                        System.out.println("Novo nome: ");
-                        String novoNome = scanner.nextLine();
-                        usuarios.set(idEditar, novoNome);
-                        System.out.println("Usuário atualizado com sucesso!");
+
+                    if (idEditar >= 0 && idEditar < usuarios.size()) {
+                        User user = usuarios.get(idEditar);
+
+                        System.out.println("O que deseja editar?");
+                        System.out.println("1 - Nome (Atual: " + user.getNome() + ")");
+                        System.out.println("2 - Email (Atual: " + user.getEmail() + ")");
+                        int subOpcao = scanner.nextInt();
+                        scanner.nextLine();
+
+                        switch (subOpcao){
+                            case 1:
+                                System.out.println("Novo nome: ");
+                                user.setNome(scanner.nextLine());
+                                System.out.println("Nome atualizado");
+                                break;
+
+                            case 2:
+                                System.out.println("Novo email: ");
+                                user.setEmail(scanner.nextLine());
+                                System.out.println("Email atualizado");
+                                break;
+                            default:
+                                System.out.println("Opção inválida");
+                        }
                     } else {
                         System.out.println("Id Inválido");
                     }
@@ -56,7 +82,7 @@ public class Main {
                 case 4:
                     System.out.println("Insira o Id do usuário para excluir");
                     int idExcluir = scanner.nextInt();
-                    if (idExcluir >= 0 || idExcluir < usuarios.size()) {
+                    if (idExcluir >= 0 && idExcluir < usuarios.size()) {
                         usuarios.remove(idExcluir);
                         System.out.println("Usuário excluído com sucesso!");
                     } else {
