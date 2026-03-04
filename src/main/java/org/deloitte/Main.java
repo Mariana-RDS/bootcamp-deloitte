@@ -27,6 +27,7 @@ public class Main {
                 case 1:
                     System.out.println("Insira o nome do usuário: ");
                     String nome = scanner.next();
+                    scanner.nextLine();
 
                     System.out.println("Insira o email do usuário: ");
                     String email = scanner.next();
