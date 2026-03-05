@@ -1,19 +1,14 @@
-# bootcamp-deloitte
+# TaskList - Deloitte Bootcamp
 
-Bootcamp de Treinamento em Java - Deloitte
+Este projeto consiste numa aplicação para gerenciamento de tarefas (To-Do List).
 
-03-03-2026
+### Funcionalidades
+O sistema permite a gestão completa do ciclo de vida de uma tarefa:
+  * Create: Cadastro de tarefas com Título, Status e Categoria. 
+  * Read: Listagem de registros. 
+  * Update: Edição parcial de atributos, permitindo alterar apenas o campo desejado sem sobrescrever todo o objeto. 
+  * Delete: Remoção de tarefas através do identificador único (ID).
 
-* Aula\_1 e Aula\_2
 
-  * CRUD de Usuário (Cadastro, Consulta, Edição, Exclusão), com uso de:
-
-    * Estrutura de Repetição While: para criação de um loop controlado, que permite que o usuário realize várias operações sem que o programa feche.
-    * Seleção de Fluxo switch-case: escolhido ao invés do if-else por ser visualmente mais limpo e mais eficiente para criação de um menu, direcionando o fluxo.
-    * Armazenamento ArrayList: Escolhido por ser dinâmico e oferecer métodos prontos de .add(), .remove(), .set()
-    * Validação de segurança com if-else: para validar os índices, impedindo o acesso fora da posição que não existe.
-
-  * Melhorias
-
-    * Criação de uma classe para usuário, assim centralizando todos os dados de uma pessoa em um único objeto
-    * O usuário passa a escolher qual atributo editar
+### Tecnologias
+  * Java SE 25

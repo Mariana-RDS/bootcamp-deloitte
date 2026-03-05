@@ -1,100 +1,95 @@
 package org.deloitte;
 
-import org.deloitte.User.User;
-
-import java.util.ArrayList;
+import org.deloitte.Model.Tarefa;
 import java.util.Scanner;
 
 public class Main {
     static void main() {
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<User> usuarios = new ArrayList<>();
         int opcao = -1;
 
-        while (opcao != 0) {
-
-            System.out.println("---Cadastro de Usuário--");
-            System.out.println("1 - Cadastrar");
-            System.out.println("2 - Listar");
-            System.out.println("3 - Editar");
-            System.out.println("4 - Excluir");
+        while (opcao != 5) {
+            System.out.println("---ToDo--");
+            System.out.println("1 - Criar Tarefa");
+            System.out.println("2 - Listar Taferas");
+            System.out.println("3 - Editar Tarefa");
+            System.out.println("4 - Excluir Tarefa");
+            System.out.println("5 - Sair");
             System.out.println("Escolha a opção desejada: ");
 
             opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Insira o nome do usuário: ");
-                    String nome = scanner.next();
-                    scanner.nextLine();
+                    System.out.println("Título: ");
+                    String titulo = scanner.nextLine();
 
-                    System.out.println("Insira o email do usuário: ");
-                    String email = scanner.next();
+                    System.out.println("Categoria: ");
+                    String categoria = scanner.nextLine();
 
-                    usuarios.add(new User(nome, email));
+                    System.out.println("Status: ");
+                    String status = scanner.nextLine();
+
+                    Tarefa novaTarefa = new Tarefa(titulo, categoria, status);
+                    novaTarefa.cadastrar();
                     break;
 
                 case 2:
-                    System.out.println("--Lista de Usuários--");
-                    if (usuarios.isEmpty()) {
-                        System.out.println("Nenhum usuário cadastrado");
-                    } else {
-                        for (int i = 0; i < usuarios.size(); i++) {
-                            System.out.println(i + " - " + usuarios.get(i));
-                        }
-                    }
+                    Tarefa.listar();
                     break;
 
                 case 3:
-                    System.out.println("Insira o Id do usuário para editar: ");
-                    int idEditar = scanner.nextInt();
+                    System.out.print("ID para Tarefa: ");
+                    long id = scanner.nextLong();
                     scanner.nextLine();
 
-                    if (idEditar >= 0 && idEditar < usuarios.size()) {
-                        User user = usuarios.get(idEditar);
+                    Tarefa tarefaEncontrada = Tarefa.buscar(id);
 
-                        System.out.println("O que deseja editar?");
-                        System.out.println("1 - Nome (Atual: " + user.getNome() + ")");
-                        System.out.println("2 - Email (Atual: " + user.getEmail() + ")");
-                        int subOpcao = scanner.nextInt();
+                    if(tarefaEncontrada != null){
+                        System.out.println("O que deseja editar:");
+                        System.out.println(" 1 - Titulo");
+                        System.out.println(" 2 - Categoria");
+                        System.out.println(" 3 - Status");
+                        System.out.println(" 4 - Cancelar");
+                        System.out.print("Escolha: ");
+
+                        int op = scanner.nextInt();
                         scanner.nextLine();
 
-                        switch (subOpcao){
-                            case 1:
-                                System.out.println("Novo nome: ");
-                                user.setNome(scanner.nextLine());
-                                System.out.println("Nome atualizado");
-                                break;
-
-                            case 2:
-                                System.out.println("Novo email: ");
-                                user.setEmail(scanner.nextLine());
-                                System.out.println("Email atualizado");
-                                break;
-                            default:
-                                System.out.println("Opção inválida");
+                        if (op == 1) {
+                            System.out.println("Novo Título: ");
+                            tarefaEncontrada.titulo = scanner.nextLine();
+                            System.out.println("Título atualizado");
+                        } else if (op == 2) {
+                            System.out.println("Nova Categoria: ");
+                            tarefaEncontrada.categoria = scanner.nextLine();
+                            System.out.println("Categoria atualizada");
+                        } else if (op == 3) {
+                            System.out.println("Novo Status: ");
+                            tarefaEncontrada.status = scanner.nextLine();
+                            System.out.println("Status atualizado");
+                        }else if(op ==4){
+                            System.out.println("Edição cancelada");
+                        }else {
+                            System.out.print("Opção Inválida ");
+                            return;
                         }
-                    } else {
-                        System.out.println("Id Inválido");
                     }
                     break;
-
                 case 4:
-                    System.out.println("Insira o Id do usuário para excluir");
-                    int idExcluir = scanner.nextInt();
-                    if (idExcluir >= 0 && idExcluir < usuarios.size()) {
-                        usuarios.remove(idExcluir);
-                        System.out.println("Usuário excluído com sucesso!");
-                    } else {
-                        System.out.println("Id Inválido!");
-                    }
-                    break;
+                    System.out.print("ID para excluir: ");
+                    long idEx = scanner.nextLong();
 
+                    Tarefa.excluir(idEx);
+                    break;
+                case 5:
+                    System.out.print("Saindo...");
+                    break;
                 default:
-                    System.out.println("Saindo...");
+                    System.out.println("Opção Inválida");
                     break;
-
             }
         }
         scanner.close();
