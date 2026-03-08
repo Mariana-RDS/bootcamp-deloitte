@@ -1,5 +1,7 @@
 package org.deloitte;
 
+import org.deloitte.Model.Categoria;
+import org.deloitte.Model.Status;
 import org.deloitte.Model.Tarefa;
 import java.util.Scanner;
 
@@ -26,11 +28,31 @@ public class Main {
                     System.out.println("Título: ");
                     String titulo = scanner.nextLine();
 
-                    System.out.println("Categoria: ");
-                    String categoria = scanner.nextLine();
+                    Status status;
+                    Categoria categoria;
 
-                    System.out.println("Status: ");
-                    String status = scanner.nextLine();
+                    try{
+                        System.out.println("Status: ");
+                        for(Status s : Status.values()){
+                            System.out.println("- " + s);
+                        }
+                        status = Status.valueOf(scanner.nextLine().toUpperCase());
+                    }catch (IllegalArgumentException e){
+                        System.out.println("Erro: Esse status não existe! Tente novamente.");
+                        continue;
+                    }
+
+                    try {
+                        System.out.println("Categoria: ");
+                        for (Categoria c : Categoria.values()){
+                            System.out.println("- " + c);
+                        }
+                        categoria = Categoria.valueOf(scanner.nextLine().toUpperCase());
+
+                    }catch (IllegalArgumentException e){
+                        System.out.println("Erro: Essa categoria não existe! Tente novamente.");
+                        continue;
+                    }
 
                     Tarefa novaTarefa = new Tarefa(titulo, categoria, status);
                     novaTarefa.cadastrar();
@@ -48,7 +70,7 @@ public class Main {
                     Tarefa tarefaEncontrada = Tarefa.buscar(id);
 
                     if(tarefaEncontrada != null){
-                        System.out.println("O que deseja editar:");
+                        System.out.println("O que deseja editar em : " + tarefaEncontrada.titulo);
                         System.out.println(" 1 - Titulo");
                         System.out.println(" 2 - Categoria");
                         System.out.println(" 3 - Status");
@@ -63,13 +85,27 @@ public class Main {
                             tarefaEncontrada.titulo = scanner.nextLine();
                             System.out.println("Título atualizado");
                         } else if (op == 2) {
-                            System.out.println("Nova Categoria: ");
-                            tarefaEncontrada.categoria = scanner.nextLine();
-                            System.out.println("Categoria atualizada");
+                            try{
+                                System.out.println("Nova Categoria: ");
+                                for(Categoria c : Categoria.values()){
+                                    System.out.println("- " + c);
+                                }
+                                tarefaEncontrada.categoria = Categoria.valueOf(scanner.nextLine().toUpperCase());
+                                System.out.println("Categoria atualizada");
+                            }catch (IllegalArgumentException e){
+                                System.out.println("Erro: Categoria Inválida. Edição Cancelada");
+                            }
                         } else if (op == 3) {
-                            System.out.println("Novo Status: ");
-                            tarefaEncontrada.status = scanner.nextLine();
-                            System.out.println("Status atualizado");
+                            try {
+                                System.out.println("Novo Status: ");
+                                for (Status s : Status.values()){
+                                    System.out.println("- " + s);
+                                }
+                                tarefaEncontrada.status = Status.valueOf(scanner.nextLine().toUpperCase());
+                                System.out.println("Status atualizado");
+                            }catch (IllegalArgumentException e){
+                                System.out.println("Erro: Status Inválida. Edição Cancelada");
+                            }
                         }else if(op ==4){
                             System.out.println("Edição cancelada");
                         }else {

@@ -9,10 +9,10 @@ public class Tarefa {
 
     public long id;
     public String titulo;
-    public String categoria;
-    public String status;
+    public Categoria categoria;
+    public Status status;
 
-    public Tarefa(String titulo, String categoria, String status) {
+    public Tarefa(String titulo, Categoria categoria, Status status) {
         this.titulo = titulo;
         this.categoria = categoria;
         this.status = status;
