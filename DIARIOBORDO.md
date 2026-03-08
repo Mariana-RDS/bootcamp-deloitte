@@ -37,3 +37,11 @@ Projeto desenvolvido para estudo de lógica e fundamentos de Java
     * Enum para Categoria: Organização das tarefas em grupos fixos (ESTUDOS, TRABALHO, PESSOAL, LAZER).
     * Evolução da arquitetura para o framework Spring Boot e Spring Data, com integração para armazenamento em Banco de Dados.
 
+### Melhorias
+08-03-2026 | Refatoração
+  * Substituição de `String` pelos `Enum` Status e Categoria
+    * Padronização dos dados e eliminação de erros de digitação
+    * Uso de `.values()`: para exibição dinâmica das opções disponíveis ao usuário
+  * Tratamento de Exceções `Try-Catch`:
+    * Para capturar `IllegalArgumentException` durante a converão de entrada do usuário `valueOf`, impedindo que a aplicação encerre inesperadamente caso o usuário digite uma opção inexistente nos Enums.
+
