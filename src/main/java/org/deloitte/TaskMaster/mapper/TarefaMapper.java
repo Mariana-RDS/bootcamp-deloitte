@@ -1,7 +1,7 @@
 package org.deloitte.TaskMaster.mapper;
 
 import org.deloitte.TaskMaster.dto.TarefaDto;
-import org.deloitte.TaskMaster.model.Tarefa;
+import org.deloitte.TaskMaster.entity.Tarefa;
 import org.mapstruct.*;
 
 import java.util.List;

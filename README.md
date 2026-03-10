@@ -26,3 +26,22 @@ O sistema permite a gestão completa do ciclo de vida de uma tarefa:
 * Update: Edição parcial de atributos, permitindo alterar apenas o campo desejado sem sobrescrever todo o objeto.
 * Delete: Remoção de tarefas através do identificador único (ID).
 
+### Como rodar o Projeto
+  * Pré-requisitos
+    * Java JDK 25
+    * Maven 3.9+
+    * IntelliJ IDEA
+  * Execução
+    * Abra o Projeto no IntelliJ
+    * Localize a classe `TaskMasterApplication` que contém a classe `main`
+    * Clique com o botão direito na classe e selecione Run `TaskMasterApplication`
+  * Testando a API com Swagger
+    * Uma vez que a aplicação está rodando:
+      * Abra o navegador e acesse o endereço (http://localhost:8080/swagger-ui/index.html)
+      * Lá você poderá visualizar todos os métodos e testá-los.
+  * Acessa o Banco de Dados (H2)
+    * Para visualizar as tabelas e dados
+      * URL: http://localhost:8080/h2-console/
+      * JDBC URL, User e Password definidos em `application.yml`
+
+

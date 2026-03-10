@@ -1,4 +1,4 @@
-package org.deloitte.TaskMaster.model;
+package org.deloitte.TaskMaster.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

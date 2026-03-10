@@ -1,8 +1,8 @@
 package org.deloitte.TaskMaster.repository;
 
-import org.deloitte.TaskMaster.model.Categoria;
-import org.deloitte.TaskMaster.model.Status;
-import org.deloitte.TaskMaster.model.Tarefa;
+import org.deloitte.TaskMaster.entity.Categoria;
+import org.deloitte.TaskMaster.entity.Status;
+import org.deloitte.TaskMaster.entity.Tarefa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
