@@ -45,3 +45,25 @@ Projeto desenvolvido para estudo de lógica e fundamentos de Java
   * Tratamento de Exceções `Try-Catch`:
     * Para capturar `IllegalArgumentException` durante a converão de entrada do usuário `valueOf`, impedindo que a aplicação encerre inesperadamente caso o usuário digite uma opção inexistente nos Enums.
 
+
+### Aula_4
+09-03-1026 e 10-03-2026 | Transição para Spring Boot
+Nesta etapa, o projeto TaskList deixou de ser uma aplicação Java simples para se tornar uma API REST robusta utilizando o ecossistema Spring Boot.
+  * Migração para o Ecossistema Spring Boot
+    * Implementação do Spring Boot 3.5.11 como base do projeto.
+    * Gerenciamento feito pelo Maven, centralizando o controle de bibliotecas como Spring Data JPA, Lombok, MapStruct no arquivo `pom.xml`
+  * Arquitetura em Camadas(Multicamadas)
+  A arquitetura foi estruturada para seguir o padrão de mercado, garantindo que a lógica de negócio não se misture com o acesso aos dados.
+    * Controller:Porta de entrada da API, responsável pelo mapemanento das rotas
+    * Service: Reside a lógica de negócio
+    * Repository: Abstração do SQL através do Spring Data JPA
+    * Model/Entity: Representação das tabelas do banco de dados utilizando anotações JPA.
+  * Integridade dos Dados
+    * DTO (Data Transfer Object): O uso de DTOs protege a entidade do banco de dados, expondo apenas o necessário.
+    * MapStruct: Mapeamento automático de Entities e DTOs.
+  * Persistência com JPA e H2
+  Configuração do banco de dados H2 e mapeamento da Entidade no banco de dados com JPA.
+  * Documentação e Testes
+    * Implementação do Swagger (OpenAPI 3): Adicionei a biblioteca springdoc-openapi para gerar automaticamente a documentação da API. Permitindo testar todos os endpoints (GET, POST, PUT, DELETE) diretamente pelo navegador.
+
+    
