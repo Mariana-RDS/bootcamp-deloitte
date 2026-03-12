@@ -47,7 +47,7 @@ Projeto desenvolvido para estudo de lógica e fundamentos de Java
 
 
 ### Aula_4
-09-03-1026 e 10-03-2026 | Transição para Spring Boot
+09-03-2026 e 10-03-2026 | Transição para Spring Boot
 * Nesta etapa, o projeto TaskList deixou de ser uma aplicação Java simples para se tornar uma API REST robusta utilizando o ecossistema Spring Boot.
   * Migração para o Ecossistema Spring Boot
     * Implementação do Spring Boot 3.5.11 como base do projeto.
@@ -66,4 +66,7 @@ Projeto desenvolvido para estudo de lógica e fundamentos de Java
   * Documentação e Testes
     * Implementação do Swagger (OpenAPI 3): Adicionei a biblioteca springdoc-openapi para gerar automaticamente a documentação da API. Permitindo testar todos os endpoints (GET, POST, PUT, DELETE) diretamente pelo navegador.
 
-    
+### Aula_5
+11-03-2026 | Testes Unitários
+* Testes de Serviço (Mocks): Implementei testes unitários para `TarefaService` utilizando Mockito, garantindo que o serviço se comporte corretamente tanto em cenários de sucesso quanto em casos de erro.
+* Testes de Repositório(DataJpaTest): Desenvolvi testes de integração para `TarefaRepositoty` utilizando o banco de dados H2.
