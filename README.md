@@ -52,3 +52,20 @@ O projeto segue as melhores práticas de desenvolvimento orientado a testes.
 2. Testes de Integração (Camada de Repositório)
 - **Tecnologias:** @DataJpaTest, H2 Database, AssertJ.
 - **Foco:** Validação da camada de persistência e integridade das queries SQL geradas pelo Spring Data JPA.
+
+### Case SOLID
+O projeto foi refatorado para aplicar princípios SOLID:
+  * Single Responsibility Principle (SRP)
+  * Open/Closed Principle (OCP
+* O desafio extra:
+  * A funcionalidade foi estendida sem alterar o código existente da `Entity` e do `Service`, a lógica de validação de estado foi isolada em uma classe `StatusInicialValidation`.
+* **Observação para Teste(Update):**
+  * Para que o sistema diferencie uma criação de uma atualização, é obrigatório enviar o `id` no corpo do JSON durante a requisição `PUT`. Isso permite que o validador reconheça a tarefa existente e libere a alteração para o status concluído.
+```
+{
+  "id": 1,
+  "titulo": "Título da Tarefa",
+  "categoria": "ESTUDOS",
+  "status": "CONCLUIDA"
+}
+```

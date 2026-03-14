@@ -70,3 +70,22 @@ Projeto desenvolvido para estudo de lógica e fundamentos de Java
 11-03-2026 | Testes Unitários
 * Testes de Serviço (Mocks): Implementei testes unitários para `TarefaService` utilizando Mockito, garantindo que o serviço se comporte corretamente tanto em cenários de sucesso quanto em casos de erro.
 * Testes de Repositório(DataJpaTest): Desenvolvi testes de integração para `TarefaRepositoty` utilizando o banco de dados H2.
+
+
+### Aula_6 e Aula_7
+12-03-2026 e 13-03-2026 | SOLID
+1. Single Responsibility Principle (SRP)
+Identifiquei que o `TarefaService` estava sobrecarregado, sendo responsável por validar dados, verificar a existência no banco e executar a lógica de persistência.
+* Refatorei o código separando as responsabilidades:
+  * **Camada de validação:** criei classes específicas para validar as regras de negócio.
+  * **Camada de serviço:** O `TarefaService` agora apenas delega validações para as classes responsáveis antes de salvar no repositório.
+* Cada classe agora tem apenas um motivo para mudar, facilitando a manutenção.
+2. Open/Closed Principle (OCP)
+  * **Interfaces:** Criei as interfaces `InterfaceDtoValidation` (para dados DTO) e `InterfaceIdValidation` (para integridade do ID).
+Agora o `TarefaService` recebe uma lista de validações injetada pelo Spring, que verifica a existência por Id no banco de dados, e a existência da tafera com títulos iguais para não gerar conflito.
+* O sistema tornou-se "fechado para modificação", mas "aberto para extensão"
+3. Desafio Extra
+* **Problema:** Impedir que novas tarefas fossem criadas com status `CONCLUIDA`, garantindo que a tarefa passe por um ciclo antes de ser finalizada.
+* Pensei em adicionar um atributo de data/prazo na `Entity` para validar o tempo da tarefa. No entanto, isso exigiria alterar a estrutura do banco de dados, o que poderia fugir do escopo do desafio. Decidi criar `StatusInicialValidation`, esta classe atua como um componente(plug) que intercepta o DTO antes de chegar ao Service.
+* Respeita o OCP, a lógica foi implementada sem alterar `TarefaEntity` ou `TarefaService`.
+Ao validar se a tarefa já "existe" (através da presença do ID no JSON da requisição) antes de verificar o status, consegui garntir que a regra só bloqueie o Post(criação), permitindo o PUT(atualização).

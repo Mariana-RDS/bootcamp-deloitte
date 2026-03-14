@@ -16,5 +16,6 @@ public interface TarefaMapper {
     List<Tarefa> toEntityList(List<TarefaDto> dtos);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
     Tarefa partialUpdate(TarefaDto tarefaDto, @MappingTarget Tarefa tarefa);
 }
