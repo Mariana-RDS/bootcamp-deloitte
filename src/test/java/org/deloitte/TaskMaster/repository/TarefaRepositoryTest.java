@@ -30,7 +30,7 @@ class TarefaRepositoryTest {
     @DisplayName("Deve retornar com título se existir no banco")
     void findByTitulo_Success() {
         String titulo = "Estudar Testes";
-        TarefaDto tarefaDto = new TarefaDto("Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
+        TarefaDto tarefaDto = new TarefaDto(null,"Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
         this.createTarefa(tarefaDto);
 
         Optional<Tarefa> resultado =  this.tarefaRepository.findByTitulo(titulo);
@@ -51,7 +51,7 @@ class TarefaRepositoryTest {
     @DisplayName("Deve retornar com tarefa por status")
     void findByStatus_Success() {
         Status status = Status.PENDENTE;
-        TarefaDto tarefaDto = new TarefaDto("Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
+        TarefaDto tarefaDto = new TarefaDto(null,"Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
         this.createTarefa(tarefaDto);
 
 
@@ -73,7 +73,7 @@ class TarefaRepositoryTest {
     @DisplayName("Deve retornar com tarefa por categoria")
     void findByCategoria_Success() {
         Categoria categoria = Categoria.ESTUDOS;
-        TarefaDto tarefaDto = new TarefaDto("Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
+        TarefaDto tarefaDto = new TarefaDto(null,"Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
         this.createTarefa(tarefaDto);
 
 

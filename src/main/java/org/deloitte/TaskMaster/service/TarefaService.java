@@ -2,15 +2,15 @@ package org.deloitte.TaskMaster.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.deloitte.TaskMaster.config.validation.InterfaceIdValidation;
+import org.deloitte.TaskMaster.config.validation.InterfaceDtoValidation;
 import org.deloitte.TaskMaster.dto.TarefaDto;
-import org.deloitte.TaskMaster.mapper.TarefaMapper;
 import org.deloitte.TaskMaster.entity.Categoria;
 import org.deloitte.TaskMaster.entity.Status;
 import org.deloitte.TaskMaster.entity.Tarefa;
+import org.deloitte.TaskMaster.mapper.TarefaMapper;
 import org.deloitte.TaskMaster.repository.TarefaRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,6 +22,8 @@ public class TarefaService {
 
     private final TarefaRepository tarefaRepository;
     private final TarefaMapper tarefaMapper;
+    private final List<InterfaceDtoValidation> dtoValidations;
+    private final List<InterfaceIdValidation> idValidations;
 
     public List<TarefaDto> getAll(){
         return tarefaMapper
@@ -30,46 +32,43 @@ public class TarefaService {
 
     public List<TarefaDto> getAllStatus(Status status) {
         List<Tarefa> tarefasStatus = tarefaRepository.findByStatus(status);
-        log.info("Buscando tarefas com status: {}", status);
-
         return tarefaMapper.toDtoList(tarefasStatus);
     }
 
     public List<TarefaDto> getAllCategoria(Categoria categoria) {
-        log.info("Buscando tarefas da categoria: {}", categoria);
         List<Tarefa> tarefasCategoria = tarefaRepository.findByCategoria(categoria);
-
         return tarefaMapper.toDtoList(tarefasCategoria);
     }
 
     public TarefaDto getById(Long id){
-        return tarefaRepository.findById(id)
-                .map(tarefaMapper::toDto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        idValidations.forEach(v -> v.validar(id));
+        Tarefa tarefa = tarefaRepository.findById(id).orElseThrow();
+        return tarefaMapper.toDto(tarefa);
     }
 
     public TarefaDto create(TarefaDto tarefaDto){
-        if (tarefaRepository.findByTitulo(tarefaDto.titulo()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe uma tarefa com este título");
-        }else{
-            Tarefa novaTarefa = tarefaMapper.toEntity(tarefaDto);
-            return tarefaMapper.toDto(tarefaRepository.save(novaTarefa));
-        }
+
+        dtoValidations.forEach(v ->
+                v.validar(tarefaDto));
+
+        Tarefa novaTarefa = tarefaMapper.toEntity(tarefaDto);
+        return tarefaMapper.toDto(tarefaRepository.save(novaTarefa));
+
     }
 
     public TarefaDto update(Long id, TarefaDto tarefaDto){
-        return tarefaRepository.findById(id)
-                .map(tarefa -> {
-                    tarefaMapper.partialUpdate(tarefaDto, tarefa);
-                    return tarefaMapper.toDto(tarefaRepository.save(tarefa));
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        idValidations.forEach(v -> v.validar(id));
+        dtoValidations.forEach(v -> v.validar(tarefaDto));
+
+        Tarefa tarefaExistente = tarefaRepository.findById(id).orElseThrow();
+
+        tarefaMapper.partialUpdate(tarefaDto, tarefaExistente);
+        return tarefaMapper.toDto(tarefaRepository.save(tarefaExistente));
+
     }
 
     public void delete(Long id){
-        if (!tarefaRepository.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID não encontrado");
-        }
+        idValidations.forEach(v -> v.validar(id));
         tarefaRepository.deleteById(id);
     }
 

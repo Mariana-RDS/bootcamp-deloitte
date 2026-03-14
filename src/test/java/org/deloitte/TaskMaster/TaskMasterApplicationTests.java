@@ -1,4 +1,4 @@
-package com.deloitte.TaskMaster;
+package org.deloitte.TaskMaster;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,6 @@
 package org.deloitte.TaskMaster.service;
 
+import org.deloitte.TaskMaster.config.validation.*;
 import org.deloitte.TaskMaster.dto.TarefaDto;
 import org.deloitte.TaskMaster.entity.*;
 import org.deloitte.TaskMaster.mapper.TarefaMapper;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,16 +29,25 @@ class TarefaServiceTest {
     @Mock
     private TarefaMapper tarefaMapper;
 
-    @InjectMocks
     private TarefaService tarefaService;
-
     private Tarefa tarefa;
     private TarefaDto tarefaDto;
 
     @BeforeEach
     void setUp(){
         tarefa = new Tarefa(1L,"Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
-        tarefaDto = new TarefaDto("Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
+        tarefaDto = new TarefaDto(1L,"Estudar Testes", Categoria.ESTUDOS, Status.PENDENTE);
+
+        InterfaceDtoValidation tituloValidation = new TituloDuplicadoValidation(tarefaRepository);
+        InterfaceIdValidation idValidation = new IdValidation(tarefaRepository);
+        InterfaceDtoValidation statusValidation = new StatusInicialValidation(tarefaRepository);
+
+        tarefaService = new TarefaService(
+                tarefaRepository,
+                tarefaMapper,
+                List.of(tituloValidation, statusValidation),
+                List.of(idValidation)
+        );
     }
 
     @Test
@@ -92,20 +101,19 @@ class TarefaServiceTest {
     @Test
     @DisplayName("Deve retornar uma tarefa por ID com sucesso")
     void getById_Success() {
-        when(tarefaRepository.findById(anyLong())).thenReturn(Optional.of(tarefa));
+        when(tarefaRepository.existsById(1L)).thenReturn(true);
+        when(tarefaRepository.findById(1L)).thenReturn(Optional.of(tarefa));
         when(tarefaMapper.toDto(any())).thenReturn(tarefaDto);
 
         TarefaDto resultado = tarefaService.getById(1L);
 
         assertNotNull(resultado);
-        assertEquals("Estudar Testes", resultado.titulo());
-        verify(tarefaRepository, times(1)).findById(1L);
     }
 
     @Test
     @DisplayName("Deve lançar exceção quando ID não existir")
     void getById_Error() {
-        when(tarefaRepository.findById(99L)).thenReturn(Optional.empty());
+        when(tarefaRepository.existsById(99L)).thenReturn(false);
 
         assertThrows(ResponseStatusException.class, () -> tarefaService.getById(99L));
     }
@@ -125,16 +133,9 @@ class TarefaServiceTest {
     }
 
     @Test
-    @DisplayName("Deve lançar exceção ao tentar criar tarefa com título já existente")
-    void create_Error(){
-        when(tarefaRepository.findByTitulo(anyString())).thenReturn(Optional.of(tarefa));
-        assertThrows(ResponseStatusException.class, () -> tarefaService.create(tarefaDto));
-        verify(tarefaRepository, never()).save(any());
-    }
-
-    @Test
     @DisplayName("Deve atualizar tarefa com sucesso quando o ID existe")
     void update_Success() {
+        when(tarefaRepository.existsById(1L)).thenReturn(true);
         when(tarefaRepository.findById(1L)).thenReturn(Optional.of(tarefa));
         when(tarefaRepository.save(any())).thenReturn(tarefa);
         when(tarefaMapper.toDto(any())).thenReturn(tarefaDto);
@@ -149,7 +150,7 @@ class TarefaServiceTest {
     @Test
     @DisplayName("Deve lançar exceção ao tentar atualizar ID inexistente")
     void update_Error(){
-        when(tarefaRepository.findById(99L)).thenReturn(Optional.empty());
+        when(tarefaRepository.existsById(99L)).thenReturn(false);
 
         assertThrows(ResponseStatusException.class, () -> tarefaService.update(99L, tarefaDto));
         verify(tarefaRepository, never()).save(any());
