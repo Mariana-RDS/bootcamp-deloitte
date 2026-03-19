@@ -89,3 +89,10 @@ Agora o `TarefaService` recebe uma lista de validações injetada pelo Spring, q
 * Pensei em adicionar um atributo de data/prazo na `Entity` para validar o tempo da tarefa. No entanto, isso exigiria alterar a estrutura do banco de dados, o que poderia fugir do escopo do desafio. Decidi criar `StatusInicialValidation`, esta classe atua como um componente(plug) que intercepta o DTO antes de chegar ao Service.
 * Respeita o OCP, a lógica foi implementada sem alterar `TarefaEntity` ou `TarefaService`.
 Ao validar se a tarefa já "existe" (através da presença do ID no JSON da requisição) antes de verificar o status, consegui garntir que a regra só bloqueie o Post(criação), permitindo o PUT(atualização).
+
+
+### Aula_8
+19-03-2926
+- **Bootstrap:** Utilizei o Bootstrap para facilitar e agilizar o desenvolvimento. Ele permite usar componentes prontos (como botões, cards e modais) sem a necessidade de criar todo o design do zero.
+- **Thymeleaf:** Template para projetos Java, facilitando a conexão entre o Java e o HTML.
+- **Conexão com o Spring Boot:** A junção acontece por meio do Model, que faz a ligação entre as informações Java para as páginas, permitindo a interação do usuário.

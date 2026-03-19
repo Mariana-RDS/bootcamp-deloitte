@@ -69,3 +69,9 @@ O projeto foi refatorado para aplicar princípios SOLID:
   "status": "CONCLUIDA"
 }
 ```
+
+### FRONTEND
+- **Tecnologia Principal:** Thymeleaf
+- **Estilização:** Bootstrap
+- **Arquitetura:** View Controller separado de REST Controller)
+- **Endereço:** http://localhost:8080/tarefas
